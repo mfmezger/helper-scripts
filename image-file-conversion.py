@@ -6,21 +6,32 @@ from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 data_path = "/path/to/data/"
+
 target_path = "/path/to/target/"
 
 
 def main():
     # iterate over data directory.
-    for file in sorted(os.listdir(data_path)):
+    # add error handeling
+    try:
+        for file in sorted(os.listdir(data_path)):
 
-        # add error handeling
-        try:
+            # ignore mac files.
+            if file == ".DS_Store":
+                continue
+
             # open image
             img = Image.open(data_path + file)
+            
+            # remove the alpha from the images if available.
+            img = img.convert('RGB')
+            
             # save image
-            img.save(target_path + file.split(".")[0] + ".png")
-        except Exception as e:
-            print("Error in File: " + file)
+            img.save(target_path + file.split(".")[0] + ".jpg")  # choose .png or .jpg
+        
+    except Exception as e:
+        print("Error in File: " + file)
+        print("Error: ", e)
 
 if __name__ == '__main__':
     main()
