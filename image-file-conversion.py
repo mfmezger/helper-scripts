@@ -1,8 +1,8 @@
 import os
-from PIL import Image
 
 # this is used to enabled the load of truncated images.
-from PIL import ImageFile
+from PIL import Image, ImageFile
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 data_path = "/path/to/data/"
