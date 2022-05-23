@@ -16,7 +16,7 @@ data_path = "/path/to/data/"
 data_path = "data/"
 
 target_path = "/path/to/target/"
-target_path = "output"
+target_path = "output/"
 
 
 def main():
@@ -62,7 +62,7 @@ def main():
 
             # contrast.
 
-            image_contrast_values = [0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+            image_contrast_values = [1.0, 1.5]
             
             for i in image_contrast_values:
                 contrast = iaa.ContrastNormalization((i))
@@ -75,7 +75,7 @@ def main():
             
 
             # horizontal flip.
-            flip = iaa.Flipud(1)
+            flip = iaa.Fliplr(1)
 
             image_aug = flip(image=img)
             # convert the image to PIL and save it.
@@ -83,8 +83,23 @@ def main():
             image_aug.save(target_path + file.split(".")[0] + "_" + "flip" + ".jpg")  
 
             # combine flip, blur and rotate
+            seq = iaa.Sequential([
+                iaa.Affine(rotate=(-15, 15)),
+                iaa.AdditiveGaussianNoise(scale=(10, 30)),
+                iaa.Crop(percent=(0, 0.2))
+            ])
 
+            images = [img] * 5
+            images_aug = seq(images=images)
 
+            x = 0
+            for i in images_aug:
+                # convert the image to PIL and save it.
+                image_aug = Image.fromarray(i)
+                image_aug.save(target_path + file.split(".")[0] + "_" + "combine"+ str(x) + ".jpg")
+                x += 1
+
+            
             
         
     except Exception as e:
