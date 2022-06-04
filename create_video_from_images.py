@@ -14,11 +14,12 @@ def main():
     frame = cv2.imread(os.path.join(image_folder, images[0]))
     height, width, layers = frame.shape
 
-    video = cv2.VideoWriter(output_name, 0, 1, (width,height))
+    video = cv2.VideoWriter(output_name, 0, 3, (width,height))
 
     # iterate over images and writhe to the video.
-    for image in images:
+    for image in images[:100]:
         video.write(cv2.imread(os.path.join(image_folder, image)))
+        
 
     cv2.destroyAllWindows()
     video.release()

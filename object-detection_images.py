@@ -8,10 +8,6 @@ def draw_bouding_boxes(img,  predictions):
     for label, box, score in zip(*predictions):
         if score < 0.8:
             continue
-        # Since the predictions are for scaled down frames,
-        # we need to increase the box dimensions
-        # box *= scale_down_factor  # TODO Issue #16
-
         # Create the box around each object detected
         # Parameters: frame, (start_x, start_y), (end_x, end_y), (r, g, b), thickness
         cv2.rectangle(img, (int(box[0]), int(box[1])), (int(box[2]), int(box[3])), (255, 0, 0), 3)
