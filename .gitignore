@@ -132,3 +132,6 @@ dmypy.json
 data
 output
 .DS_Store
+*.avi
+*.mp4
+Frame
