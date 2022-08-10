@@ -132,7 +132,4 @@ dmypy.json
 data
 output
 .DS_Store
-*.pdf
 Angebotsunterlagen
-flags.txt
-target.zip
