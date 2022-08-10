@@ -133,3 +133,5 @@ data
 output
 .DS_Store
 Angebotsunterlagen
+flags.txt
+target.zip
