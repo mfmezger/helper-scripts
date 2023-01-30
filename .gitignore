@@ -135,3 +135,6 @@ output
 Angebotsunterlagen
 flags.txt
 target.zip
+*.json
+*.mp4
+.mp3

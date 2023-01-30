@@ -11,3 +11,4 @@ Includes small scripts for tasks you need to solve quickly and the solution is h
 Converts images from all formats that Pillow can read to png format. 
 
 
+TODO: Add Poetry SUpport
