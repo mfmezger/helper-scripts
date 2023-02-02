@@ -1,6 +1,7 @@
+import os
 import zipfile
 from pathlib import Path
-import os
+
 
 def main():
 
@@ -10,7 +11,7 @@ def main():
 
         folder_name = path_2_file.split(".")[0]
         Path("tmp").mkdir(parents=True, exist_ok=True)
-        with zipfile.ZipFile(path_2_file, 'r') as zip_ref:
+        with zipfile.ZipFile(path_2_file, "r") as zip_ref:
             zip_ref.extractall("tmp")
     except Exception as e:
         raise ValueError("Error: ", e)
@@ -26,17 +27,13 @@ def main():
                 origin = os.path.join(root, file)
                 target = os.path.join(os.path.join(os.getcwd(), folder_name), file)
                 Path(origin).rename(target)
-    
+
         # delete the folder that was created
         # os.rmdir("tmp")
 
-
     except Exception as e:
-        raise 
+        raise
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
-

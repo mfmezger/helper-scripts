@@ -2,8 +2,6 @@
 from moviepy.editor import VideoFileClip
 
 
-
-
 # main method
 def main():
 
@@ -17,6 +15,5 @@ def main():
     audio.write_audiofile("audio.mp3")
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

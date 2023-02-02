@@ -1,14 +1,13 @@
 import os
-import zipfile
-from zipfile import ZipFile
 from pathlib import Path
+from zipfile import ZipFile
 
 
 def initialize_runtime_env():
 
     # User specific RUN_ID for aws session
-    run_id = os.getenv('RUN_ID', default='')
-    if run_id == '':
+    run_id = os.getenv("RUN_ID", default="")
+    if run_id == "":
         # if docker is executed locally, there will be no run_id, and therefore we don't need a path on the cloud for the params
         path_prefix = os.getcwd()
         print("RUN_ID is EMPTY")
@@ -19,6 +18,7 @@ def initialize_runtime_env():
 
     return path_prefix
 
+
 def read_in_memory_zip(path_prefix):
     # search the only zip file in the directory
     for file in os.listdir(path_prefix):
@@ -28,25 +28,24 @@ def read_in_memory_zip(path_prefix):
 
     # save the zip file name to txt file.
     zip_name = path_to_zip.split("/")[-1].split(".")[0]
-    with open(path_prefix+"/input/origin_name.txt", "w") as text_file:
+    with open(path_prefix + "/input/origin_name.txt", "w") as text_file:
         text_file.write(zip_name)
-
 
     # generate the target path
     target_path = os.path.join(path_prefix, "input")
     Path(target_path).mkdir(parents=True, exist_ok=True)
     # unpack the zip file, but in memory
-    input_zip=ZipFile(path_to_zip)
+    input_zip = ZipFile(path_to_zip)
     for name in input_zip.namelist():
         # check if the file is a directory
         if name.endswith("/"):
             continue
         else:
             f = input_zip.read(name)
-            #save the in memory file to the target path
+            # save the in memory file to the target path
             with open(os.path.join(target_path, name.split("/")[-1]), "wb") as file:
                 file.write(f)
-    
+
 
 def main():
     # initialize the runtime environment
@@ -56,6 +55,5 @@ def main():
     read_in_memory_zip(path_prefix)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

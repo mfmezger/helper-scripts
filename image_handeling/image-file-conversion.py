@@ -22,16 +22,17 @@ def main():
 
             # open image
             img = Image.open(data_path + file)
-            
+
             # remove the alpha from the images if available.
-            img = img.convert('RGB')
-            
+            img = img.convert("RGB")
+
             # save image
             img.save(target_path + file.split(".")[0] + ".jpg")  # choose .png or .jpg
-        
+
     except Exception as e:
         print("Error in File: " + file)
         print("Error: ", e)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

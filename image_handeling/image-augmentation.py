@@ -2,8 +2,8 @@ import os
 
 import imageio
 import imgaug as ia
-import numpy as np
 from imgaug import augmenters as iaa
+
 # this is used to enabled the load of truncated images.
 from PIL import Image, ImageFile
 
@@ -35,15 +35,15 @@ def main():
             # ignore mac files.
             if file == ".DS_Store":
                 continue
-            
+
             # load the image.
             img = imageio.imread(data_path + file)
-            
+
             if rotation:
                 # read image with imageio because it is rotated -90 degrees with PIL and numpy.
 
                 # rotation augmentation.
-                image_rotation_angles = [-10, - 5, 5, 10]
+                image_rotation_angles = [-10, -5, 5, 10]
                 for i in image_rotation_angles:
                     rotate = iaa.Affine(rotate=(i))
                     image_aug = rotate(image=img)
@@ -52,7 +52,6 @@ def main():
                     image_aug = Image.fromarray(image_aug)
                     # save rotated image
                     image_aug.save(target_path + file.split(".")[0] + "_" + "rot" + str(i) + ".jpg")  # choose .png or .jpg
-
 
             if blur:
                 # blurring.
@@ -72,16 +71,16 @@ def main():
             if contrast:
                 # contrast.
                 image_contrast_values = [1.0, 1.5]
-                
+
                 for i in image_contrast_values:
-                    contrast = iaa.ContrastNormalization((i))
+                    contrast = iaa.ContrastNormalization(i)
                     image_aug = contrast(image=img)
 
                     # convert the image to PIL and save it.
                     image_aug = Image.fromarray(image_aug)
                     # save contrast image
                     image_aug.save(target_path + file.split(".")[0] + "_" + "contrast" + str(i) + ".jpg")
-            
+
             if flip:
                 # horizontal flip.
                 flip = iaa.Fliplr(1)
@@ -89,15 +88,17 @@ def main():
                 image_aug = flip(image=img)
                 # convert the image to PIL and save it.
                 image_aug = Image.fromarray(image_aug)
-                image_aug.save(target_path + file.split(".")[0] + "_" + "flip" + ".jpg")  
+                image_aug.save(target_path + file.split(".")[0] + "_" + "flip" + ".jpg")
 
             if combination:
                 # combine flip, blur and rotate
-                seq = iaa.Sequential([
-                    #iaa.Affine(rotate=(-10, 10)),
-                    #iaa.AdditiveGaussianNoise(scale=(10, 30)),
-                    iaa.Crop(percent=(0, 0.2))
-                ])
+                seq = iaa.Sequential(
+                    [
+                        # iaa.Affine(rotate=(-10, 10)),
+                        # iaa.AdditiveGaussianNoise(scale=(10, 30)),
+                        iaa.Crop(percent=(0, 0.2))
+                    ]
+                )
 
                 images = [img] * 5
                 images_aug = seq(images=images)
@@ -106,13 +107,13 @@ def main():
                 for i in images_aug:
                     # convert the image to PIL and save it.
                     image_aug = Image.fromarray(i)
-                    image_aug.save(target_path + file.split(".")[0] + "_" + "combine"+ str(x) + ".jpg")
+                    image_aug.save(target_path + file.split(".")[0] + "_" + "combine" + str(x) + ".jpg")
                     x += 1
-        
+
     except Exception as e:
         print("Error in File: " + file)
         print("Error: ", e)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
