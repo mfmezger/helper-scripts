@@ -137,4 +137,4 @@ flags.txt
 target.zip
 *.json
 *.mp4
-.mp3
+*.mp3
